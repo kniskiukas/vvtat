@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VVTAT – Kreipimasis į pardavėją</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header" id="appHeader"></header>
+  <section class="hero" id="hero"></section>
+
+  <main class="main-content">
+    <div class="card">
+      <div class="step-label">Kategorija 2 / 2</div>
+      <h2 class="question">Ar jau kreipėtės į pardavėją raštu ir praėjo 14 dienų?</h2>
+      <p class="question-sub">Prieš kreipiantis į VVTAT, būtina pirmiausia raštu pateikti pretenziją pardavėjui ir suteikti jam 14 kalendorinių dienų atsakyti.</p>
+
+      <div class="info-box neutral">
+        <span class="info-box-icon">ℹ️</span>
+        <div><strong>Pastaba:</strong> Jei dar nesikreipėte — išsiųskite pretenziją el. paštu arba registruotu laišku, palaukite 14 dienų ir grįžkite čia.</div>
+      </div>
+
+      <div class="options">
+        <button class="option-btn" data-value="14d_taip" data-next="q2-01-adoc.html">
+          <span class="option-marker">A</span>
+          <span class="option-body">
+            <span class="option-title">Taip — kreipiausi raštu ir praėjo 14 dienų arba pardavėjas neatsakė</span>
+          </span>
+        </button>
+        <button class="option-btn" data-value="14d_ne" data-next="end-14days.html">
+          <span class="option-marker">B</span>
+          <span class="option-body">
+            <span class="option-title">Ne — dar nesikreipiau arba terminas dar nesibaigė</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="actions" id="actions"></div>
+    </div>
+  </main>
+
+  <script src="shared.js"></script>
+  <script src="s5-14days.js"></script>
+</body>
+</html>

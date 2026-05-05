@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VVTAT – Pardavėjo atsakymas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header" id="appHeader"></header>
+  <section class="hero" id="hero"></section>
+
+  <main class="main-content">
+    <div class="card">
+      <div class="step-label">Dokumentai 2 / 5</div>
+      <h2 class="question">Ar turite pardavėjo atsakymą į jūsų pretenziją?</h2>
+      <p class="question-sub">Pardavėjo atsakymas arba jūsų kreipimosi kopija yra svarbus įrodymas.</p>
+
+      <div class="options">
+        <button class="option-btn"
+                data-value="resp_rastas"
+                data-next="q2-03-purchase.html"
+                data-upload-key="atsakymas"
+                data-upload-label="Pridėti atsakymo kopiją"
+                data-upload-sub="PDF, nuotrauka arba screenshot (el. laiško, savitarnos žinutės, oficialaus rašto)">
+          <span class="option-marker">A</span>
+          <span class="option-body">
+            <span class="option-title">Taip — turiu atsakymą raštu</span>
+            <span class="option-desc">El. laiškas, oficialus raštas, savitarnos žinutė ar pan.</span>
+          </span>
+        </button>
+        <button class="option-btn"
+                data-value="resp_kreipimasis"
+                data-next="q2-03-purchase.html"
+                data-upload-key="kreipimasis"
+                data-upload-label="Pridėti savo kreipimosi kopiją"
+                data-upload-sub="El. laiško screenshot, registruoto laiško kvitas, savitarnos pranešimas">
+          <span class="option-marker">B</span>
+          <span class="option-body">
+            <span class="option-title">Ne — neatsakė, bet turiu savo kreipimosi kopiją</span>
+            <span class="option-desc">Išsiųsto el. laiško screenshot, registruoto laiško kvitas, savitarnos pranešimas</span>
+          </span>
+        </button>
+        <button class="option-btn" data-value="resp_zodziai" data-next="end-zodziai.html">
+          <span class="option-marker">C</span>
+          <span class="option-body">
+            <span class="option-title">Kreipiausi tik žodžiu arba telefonu</span>
+          </span>
+        </button>
+        <button class="option-btn" data-value="resp_niekas" data-next="end-no-evidence.html">
+          <span class="option-marker">D</span>
+          <span class="option-body">
+            <span class="option-title">Neturiu nei atsakymo, nei kreipimosi kopijos</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Upload section — shown automatically when option with data-upload-key is selected -->
+      <div id="uploadSection" hidden>
+        <div class="upload-section">
+          <label class="upload-label" id="uploadLabel">Pridėti dokumentus</label>
+          <span class="upload-sublabel" id="uploadSublabel"></span>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx">
+            <div class="upload-zone-icon">📎</div>
+            <p><strong>Pasirinkite failus</strong> arba nutempkite čia</p>
+            <span>PDF, nuotrauka, screenshot · maks. 20 MB vienas failas</span>
+          </div>
+          <div class="file-list" id="fileList"></div>
+        </div>
+      </div>
+
+      <div class="actions" id="actions"></div>
+    </div>
+  </main>
+
+  <script src="shared.js"></script>
+  <script src="q2-02-response.js"></script>
+</body>
+</html>

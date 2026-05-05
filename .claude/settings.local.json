@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/kniskiukas/Desktop/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(python -c ' *)",
+      "Bash(pip install *)"
+    ]
+  }
+}
