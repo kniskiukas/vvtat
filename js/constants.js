@@ -1,7 +1,8 @@
 'use strict';
 
-const KEY_ANSWERS = 'vvtat_answers_v1';
-const KEY_FILES   = 'vvtat_files_v1';
+const KEY_ANSWERS  = 'vvtat_answers_v1';
+const KEY_FILES    = 'vvtat_files_v1';
+const KEY_MAX_STEP = 'vvtat_max_step_v1';
 const MAX_MB      = 20;
 
 const PHASES = [
@@ -11,21 +12,6 @@ const PHASES = [
   { id: 'summary',     label: 'Santrauka',  num: 4 },
 ];
 
-const PHASE_HERO = {
-  eligibility: { icon: '🔍', title: 'Tinkamumo tikrinimas', sub: 'Pirmiausia nustatysime, ar VVTAT gali jums padėti ir ar esate tinkamoje vietoje.' },
-  category:    { icon: '📋', title: 'Ginčo kategorija',     sub: 'Tiksliau apibūdinkite ginčą, kad galėtume suformuoti tinkamą prašymą.' },
-  documents:   { icon: '📂', title: 'Dokumentų rinkimas',   sub: 'Surinkite reikiamus dokumentus — jie sustiprins jūsų prašymą.' },
-  summary:     { icon: '✅', title: 'Prašymo santrauka',    sub: 'Peržiūrėkite surinktą informaciją ir pereikite prie pateikimo.' },
-  end:         { icon: '↗️', title: 'Nukreipiame jus',       sub: 'Jūsų situaciją nagrinėja kita institucija — žemiau rasite nuorodą.' },
-};
-
-const PHASE_GRAD = {
-  eligibility: 'linear-gradient(130deg,#1e3a8a 0%,#2563eb 100%)',
-  category:    'linear-gradient(130deg,#0369a1 0%,#2563eb 100%)',
-  documents:   'linear-gradient(130deg,#0e7490 0%,#2563eb 100%)',
-  summary:     'linear-gradient(130deg,#4338ca 0%,#6d28d9 100%)',
-  end:         'linear-gradient(130deg,#1e3a8a 0%,#0369a1 100%)',
-};
 
 const ANSWER_LABELS = {
   fizinis:          'Fizinis asmuo',
