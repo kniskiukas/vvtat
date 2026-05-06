@@ -13,7 +13,7 @@ const PHASES = [
 
 const PHASE_HERO = {
   eligibility: { icon: '🔍', title: 'Tinkamumo tikrinimas', sub: 'Pirmiausia nustatysime, ar VVTAT gali jums padėti ir ar esate tinkamoje vietoje.' },
-  category:    { icon: '📋', title: 'Ginčo kategorija',     sub: 'Tiksliau apibūdinkite ginčą, kad galėtume suformuoti tinkamą prašymą.' },
+  category:    { icon: '📋', title: 'Skundo kategorija',     sub: 'Tiksliau apibūdinkite skundą, kad galėtume suformuoti tinkamą prašymą.' },
   documents:   { icon: '📂', title: 'Dokumentų rinkimas',   sub: 'Surinkite reikiamus dokumentus — jie sustiprins jūsų prašymą.' },
   summary:     { icon: '✅', title: 'Prašymo santrauka',    sub: 'Peržiūrėkite surinktą informaciją ir pereikite prie pateikimo.' },
   end:         { icon: '↗️', title: 'Nukreipiame jus',       sub: 'Jūsų situaciją nagrinėja kita institucija — žemiau rasite nuorodą.' },
@@ -79,7 +79,7 @@ const STEP_NAV = [
   { id: 's1',             label: 'Kategorija',           phase: 'eligibility' },
   { id: 's2',             label: 'Paslaugos teikėjas',   phase: 'eligibility' },
   { id: 's3_price',       label: 'Kaina',                phase: 'eligibility' },
-  { id: 's4_subcategory', label: 'Ginčo pobūdis',        phase: 'category'    },
+  { id: 's4_subcategory', label: 'Skundo pobūdis',        phase: 'category'    },
   { id: 's5_14days',      label: '14 dienų kreipimasis', phase: 'category'    },
   { id: 'q2_01_adoc',     label: 'ADoc galimybė',        phase: 'documents'   },
   { id: 'q2_02_response', label: 'Pardavėjo atsakymas',  phase: 'documents'   },
@@ -119,7 +119,7 @@ const STEPS = {
     sub: 'VVTAT nagrinėja tik fizinių asmenų (vartotojų) skundus prieš verslą.',
     options: [
       { value: 'fizinis',   next: 's1',           marker: 'A', title: 'Fizinis asmuo',    desc: 'Kreipiuosi kaip privatus vartotojas' },
-      { value: 'juridinis', next: 'end-juridinis', marker: 'B', title: 'Juridinis asmuo', desc: 'Atstovauju įmonę ar organizaciją' },
+      { value: 'juridinis', next: 'end-juridinis', marker: 'B', title: 'Juridinis asmuo', desc: 'Atstovauju įmonei ar organizacijai' },
     ],
   },
   s1: {
@@ -132,26 +132,26 @@ const STEPS = {
       { value: 'finansai',   next: 'end-lb',         marker: 'B', title: 'Finansinių paslaugų',                                desc: 'Bankai, draudimas, kredito unijos, investicinės įmonės ir kt.' },
       { value: 'vartojimas', next: 's2',             marker: 'C', title: 'Vartojimo prekių ar kitų paslaugų',                  desc: 'Laisvalaikis, turizmas, valymas, remontas, statyba, grožis, medicina ir kt.' },
       { value: 'energetika', next: 'end-vert',       marker: 'D', title: 'Energetikos įmonių veiklos ar komunalinių paslaugų', desc: 'Dujos, elektra, šiluma, vanduo' },
-      { value: 'teisines',   next: 'end-advokatura', marker: 'E', title: 'Teisinių paslaugų (advokatų)',                       desc: 'Ginčai dėl advokato suteiktų paslaugų' },
+      { value: 'teisines',   next: 'end-advokatura', marker: 'E', title: 'Teisinių paslaugų (advokatų)',                       desc: 'Skundai dėl advokato suteiktų paslaugų' },
       { value: 'maistas',    next: 'end-vmvt',       marker: 'F', title: 'Maisto produktų ar veterinarinių paslaugų',          desc: 'Maisto sauga, kokybė, veterinariniai pažeidimai' },
     ],
   },
   s2: {
     phase: 'eligibility',
     label: 'Žingsnis 3 / 4',
-    question: 'Identifikuokite paslaugos teikėją',
-    sub: 'Kur yra registruotas pardavėjas arba paslaugos teikėjas, su kuriuo turite ginčą?',
+    question: 'Identifikuokite paslaugos teikėją / prekės pardavėją',
+    sub: 'Kur yra registruotas pardavėjas arba paslaugos teikėjas, dėl kurio teikiate skundą?',
     options: [
       { value: 'lt_verslas', next: 's3_price',       marker: 'A', title: 'Lietuvoje registruotas verslas',                          desc: 'Pardavėjas yra juridinis asmuo, veikiantis Lietuvoje' },
-      { value: 'eu_verslas', next: 'end-ecc',         marker: 'B', title: 'ES, Norvegijoje ar Islandijoje registruotas verslas',      desc: 'Pardavėjas registruotas kitoje ES šalyje ar EEE valstybėje' },
-      { value: 'fiz_pardav', next: 'end-fiz-pardav',  marker: 'C', title: 'Privatus asmuo (neprofesionalus pardavėjas)',              desc: 'Pvz. pirkimas iš skelbimų portalo iš privataus asmens' },
+      { value: 'eu_verslas', next: 'end-ecc',         marker: 'B', title: 'Europos Sąjungoje, Norvegijoje ar Islandijoje registruotas verslas',      desc: 'Pardavėjas registruotas kitoje Europos Sąjungos šalyje ar Europos Ekonomikos zonos valstybėje' },
+      { value: 'fiz_pardav', next: 'end-fiz-pardav',  marker: 'C', title: 'Privatus asmuo (neprofesionalus pardavėjas)',              desc: 'Pirkimas iš skelbimų portalo iš privataus asmens' },
+      { value : 'kita',       next: 'end-ecc',         marker: 'D', title: 'Kitas atvejis',                                              desc: 'Pardavėjas yra už ES ribų arba nežinau, kas tai yra' },
     ],
   },
   s3_price: {
     phase: 'eligibility',
     label: 'Žingsnis 4 / 4',
     question: 'Ar jūsų įsigytos prekės ar paslaugos kaina viršija 20 eurų?',
-    sub: 'VVTAT nenagrinėja ginčų, kai ginčo suma yra mažesnė nei 20 eurų.',
     options: [
       { value: 'kaina_taip', next: 's4_subcategory', marker: 'A', title: 'Taip, kaina viršija 20 eurų' },
       { value: 'kaina_ne',   next: 'end-kaina',      marker: 'B', title: 'Ne, kaina neviršija 20 eurų' },
@@ -160,7 +160,7 @@ const STEPS = {
   s4_subcategory: {
     phase: 'category',
     label: 'Kategorija 1 / 2',
-    question: 'Kokio pobūdžio yra jūsų ginčas?',
+    question: 'Kokio pobūdžio yra jūsų skundas?',
     sub: 'Pasirinkite, kuri sritis geriausiai apibūdina problemą.',
     options: [
       { value: 'laisvalaikis', next: 's5_14days', marker: 'A', title: 'Laisvalaikio, turizmo arba transporto paslaugos' },
@@ -177,8 +177,6 @@ const STEPS = {
     phase: 'category',
     label: 'Kategorija 2 / 2',
     question: 'Ar jau kreipėtės į pardavėją raštu ir praėjo 14 dienų?',
-    sub: 'Prieš kreipiantis į VVTAT, būtina pirmiausia raštu pateikti pretenziją pardavėjui ir suteikti jam 14 kalendorinių dienų atsakyti.',
-    info: { type: 'neutral', text: 'Pastaba: Jei dar nesikreipėte — išsiųskite pretenziją el. paštu arba registruotu laišku, palaukite 14 dienų ir grįžkite čia.' },
     options: [
       { value: '14d_taip', next: 'q2_01_adoc', marker: 'A', title: 'Taip — kreipiausi raštu ir praėjo 14 dienų arba pardavėjas neatsakė' },
       { value: '14d_ne',   next: 'end-14days', marker: 'B', title: 'Ne — dar nesikreipiau arba terminas dar nesibaigė' },
@@ -265,7 +263,7 @@ const ENDS = {
   'end-rrt': {
     icon: '📡',
     title: 'Jūsų skundą nagrinėja RRT',
-    body: 'Skundus dėl elektroninių ryšio ir pašto paslaugų (interneto, televizijos, mobilaus ryšio) priima Lietuvos Respublikos ryšių reguliavimo tarnyba (RRT).',
+    body: 'Skundus dėl elektroninių ryšio (interneto, televizijos, mobilaus ryšio) ir pašto paslaugų  priima Lietuvos Respublikos ryšių reguliavimo tarnyba (RRT).',
     link: { href: 'https://rrt.lt/', label: 'Atidaryti RRT svetainę →' },
   },
   'end-lb': {
@@ -283,7 +281,7 @@ const ENDS = {
   'end-advokatura': {
     icon: '⚖️',
     title: 'Jūsų skundą nagrinėja Lietuvos advokatūra',
-    body: 'Ginčus dėl teisinių paslaugų (advokatų) nagrinėja Lietuvos advokatūros advokatų taryba.',
+    body: 'Skundus dėl teisinių paslaugų (advokatų) priima Lietuvos advokatūros advokatų taryba.',
     link: { href: 'https://www.advokatura.lt/', label: 'Atidaryti Advokatūros svetainę →' },
   },
   'end-vmvt': {
@@ -295,18 +293,23 @@ const ENDS = {
   'end-ecc': {
     icon: '🇪🇺',
     title: 'Kreipkitės į Europos vartotojų centrą',
-    body: 'Skundus dėl ES šalių, Norvegijos ir Islandijos įmonių prekių ir paslaugų nagrinėja Europos vartotojų centras Lietuvoje (ECC Lietuva).',
+    body: 'Skundus dėl ES šalių, Norvegijos ir Islandijos įmonių prekių ir paslaugų priima Europos vartotojų centras Lietuvoje (ECC Lietuva).',
     link: { href: 'https://ecc.lt/', label: 'Atidaryti ECC Lietuva svetainę →' },
+  },
+  'end-kita': {
+    icon: '❓',
+    title: 'Kitas atvejis',
+    body: 'Jei jūsų atvejis nėra pateiktas aukščiau, galite kreiptis į Europos vartotojų centrą Lietuvoje (ECC Lietuva).',
   },
   'end-fiz-pardav': {
     icon: '🤝',
     title: 'VVTAT nenagrinėja ginčų tarp privačių asmenų',
-    body: 'Valstybinė vartotojų teisių apsaugos tarnyba nagrinėja tik ginčus tarp vartotojo ir verslo (juridinio asmens). Ginčai tarp privačių asmenų nagrinėjami teisme.',
+    body: 'Valstybinė vartotojų teisių apsaugos tarnyba priima tik skundus tarp vartotojo ir verslo (juridinio asmens). Ginčai tarp privačių asmenų priimami teisme.',
   },
   'end-kaina': {
     icon: '💶',
     title: 'Ginčo suma per maža',
-    body: 'VVTAT nenagrinėja ginčų, kai ginčo suma mažesnė nei 20 eurų. Galite bandyti spręsti ginčą tiesiogiai su pardavėju arba kreiptis į teismą.',
+    body: 'VVTAT nenagrinėja ginčų, kai ginčo suma mažesnė nei 20 eurų. Galite bandyti spręsti skundą tiesiogiai su pardavėju arba kreiptis į teismą.',
   },
   'end-14days': {
     icon: '📬',
