@@ -57,78 +57,42 @@ function renderHeader(activePhase) {
     </div>`;
 }
 
-function renderHero(phase) {
-  const hero = document.getElementById('hero');
-  if (!hero) return;
-  const h = PHASE_HERO[phase] || PHASE_HERO.end;
-  hero.style.background = PHASE_GRAD[phase] || PHASE_GRAD.end;
-  hero.innerHTML = `
-    <div class="hero-inner">
-      <div class="hero-icon">${h.icon}</div>
-      <h1 class="hero-title">${h.title}</h1>
-      <p class="hero-sub">${h.sub}</p>
-    </div>`;
-}
 
 function renderSidebar(activeStepId, activePhase) {
-  const main = document.querySelector('.main-content');
-  if (!main) return;
-
-  let sidebar = document.getElementById('pageSidebar');
-  if (!sidebar) {
-    main.insertAdjacentHTML('afterbegin', '<aside class="page-sidebar" id="pageSidebar" aria-label="Greita navigacija"></aside>');
-    sidebar = document.getElementById('pageSidebar');
+  let nav = document.getElementById('pageSidebar');
+  if (!nav) {
+    document.body.insertAdjacentHTML('beforeend',
+      '<nav class="bottom-nav" id="pageSidebar" aria-label="Žingsnių navigacija"></nav>');
+    nav = document.getElementById('pageSidebar');
   }
-  if (!sidebar) return;
+  if (!nav) return;
 
-  main.classList.add('with-sidebar');
   const activeIndex = STEP_NAV.findIndex(s => s.id === activeStepId);
+  const maxVisited  = getMaxVisitedIndex();
 
-  const sections = PHASES.map(phase => {
-    const items = STEP_NAV.filter(s => s.phase === phase.id).map(step => {
-      const stepIndex = STEP_NAV.findIndex(s => s.id === step.id);
-      const isActive  = step.id === activeStepId;
-      const isDone    = activeIndex >= 0 && stepIndex < activeIndex;
-      const isOpen    = getAnswer(step.id) !== null || stepIndex <= activeIndex || activePhase === 'summary';
-      const cls = ['sidebar-step', isActive ? 'active' : '', isDone ? 'done' : '', isOpen ? 'open' : 'locked'].filter(Boolean).join(' ');
-      const answer = getAnswer(step.id);
-      const preview = answer ? escHtml(ANSWER_LABELS[answer] || answer) : 'Nėra pasirinkimo';
+  const items = [];
+  STEP_NAV.forEach((step, stepIndex) => {
+    const prev = STEP_NAV[stepIndex - 1];
+    if (prev && prev.phase !== step.phase) {
+      items.push('<span class="bnav-phase-arrow">›</span>');
+    } else if (prev) {
+      items.push('<span class="bnav-step-arrow">›</span>');
+    }
 
-      return isOpen
-        ? `<a class="${cls}" href="#${step.id}">
-             <span class="sidebar-step-dot">${isDone ? '✓' : stepIndex + 1}</span>
-             <span class="sidebar-step-text">
-               <span class="sidebar-step-label">${escHtml(step.label)}</span>
-               <span class="sidebar-step-preview">${preview}</span>
-             </span>
-           </a>`
-        : `<span class="${cls}" aria-disabled="true">
-             <span class="sidebar-step-dot">${stepIndex + 1}</span>
-             <span class="sidebar-step-text">
-               <span class="sidebar-step-label">${escHtml(step.label)}</span>
-               <span class="sidebar-step-preview">${preview}</span>
-             </span>
-           </span>`;
-    }).join('');
+    const isActive = step.id === activeStepId;
+    const isDone   = activeIndex >= 0 && stepIndex < activeIndex;
+    const isOpen   = stepIndex <= Math.max(activeIndex, maxVisited) || getAnswer(step.id) !== null || activePhase === 'summary';
+    const cls = ['bnav-pill', isActive ? 'active' : isDone ? 'done' : '', isOpen && !isActive ? 'open' : !isOpen ? 'locked' : ''].filter(Boolean).join(' ');
 
-    return `
-      <section class="sidebar-group">
-        <div class="sidebar-group-title">${phase.label}</div>
-        <div class="sidebar-group-items">${items}</div>
-      </section>`;
-  }).join('');
+    items.push(isOpen && !isActive
+      ? `<a class="${cls}" href="#${step.id}">${escHtml(step.label)}</a>`
+      : `<span class="${cls}">${escHtml(step.label)}</span>`);
+  });
 
-  sidebar.innerHTML = `
-    <div class="sidebar-card">
-      <div class="sidebar-title">Greita navigacija</div>
-      <p class="sidebar-copy">Grįžkite į ankstesnį žingsnį arba peršokite į jau užpildytas dalis.</p>
-      <div class="sidebar-groups">${sections}</div>
-    </div>`;
+  nav.innerHTML = `<div class="bnav-inner">${items.join('')}</div>`;
 }
 
 function removeSidebar() {
-  const main = document.querySelector('.main-content');
-  if (main) main.classList.remove('with-sidebar');
-  const sidebar = document.getElementById('pageSidebar');
-  if (sidebar) sidebar.remove();
+  const nav = document.getElementById('pageSidebar');
+  if (nav) nav.remove();
 }

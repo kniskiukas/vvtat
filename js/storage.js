@@ -18,6 +18,13 @@ function getAllAnswers() {
   catch { return {}; }
 }
 
+function getMaxVisitedIndex() {
+  return parseInt(sessionStorage.getItem(KEY_MAX_STEP) || '-1', 10);
+}
+function updateMaxVisitedIndex(idx) {
+  if (idx > getMaxVisitedIndex()) sessionStorage.setItem(KEY_MAX_STEP, idx);
+}
+
 function clearAll() {
   try {
     localStorage.removeItem(KEY_ANSWERS);

@@ -1,5 +1,8 @@
 'use strict';
 
+let _prevStepIdx = -1;
+let _slideClass  = '';
+
 function uploadZoneHTML() {
   return `
     <div class="upload-zone" id="uploadZone">
@@ -43,7 +46,7 @@ function renderChoiceStep(stepId, step) {
   }).join('');
 
   document.getElementById('content').innerHTML = `
-    <div class="card">
+    <div class="card ${_slideClass}">
       <div class="step-label">${step.label}</div>
       <h2 class="question">${escHtml(step.question)}</h2>
       ${step.sub ? `<p class="question-sub">${escHtml(step.sub)}</p>` : ''}
@@ -81,7 +84,7 @@ function renderChoiceStep(stepId, step) {
 // ── Info step ──────────────────────────────────────────────────
 function renderInfoStep(stepId, step) {
   document.getElementById('content').innerHTML = `
-    <div class="card">
+    <div class="card ${_slideClass}">
       <div class="step-label">${step.label}</div>
       <h2 class="question">${escHtml(step.question)}</h2>
       ${infoBoxHTML(step.info)}
@@ -95,7 +98,7 @@ function renderInfoStep(stepId, step) {
 // ── End state ──────────────────────────────────────────────────
 function renderEndState(end) {
   document.getElementById('content').innerHTML = `
-    <div class="end-card">
+    <div class="end-card ${_slideClass}">
       <div class="end-icon">${end.icon}</div>
       <div class="end-title">${escHtml(end.title)}</div>
       <div class="end-body">${escHtml(end.body)}</div>
@@ -149,7 +152,7 @@ function renderSummaryPage() {
        </div>`;
 
   document.getElementById('content').innerHTML = `
-    <div class="card">
+    <div class="card ${_slideClass}">
       <div class="step-label">Santrauka</div>
       <h2 class="question">Jūsų prašymo santrauka</h2>
       <p class="question-sub">Patikrinkite surinktą informaciją prieš pateikdami prašymą VVTAT.</p>
@@ -191,24 +194,31 @@ function renderPage(pageId) {
   const endDef  = ENDS[pageId];
   const phase   = stepDef?.phase || (endDef ? 'end' : null);
 
+  const stepIdx = STEP_NAV.findIndex(s => s.id === pageId);
+  if (stepIdx >= 0) {
+    updateMaxVisitedIndex(stepIdx);
+    _slideClass = _prevStepIdx >= 0 && stepIdx !== _prevStepIdx
+      ? (stepIdx > _prevStepIdx ? 'slide-forward' : 'slide-back')
+      : '';
+    _prevStepIdx = stepIdx;
+  } else {
+    _slideClass = '';
+  }
+
   if (pageId === 'summary') {
     renderHeader('summary');
-    renderHero('summary');
     renderSummaryPage();
     renderSidebar('summary', 'summary');
   } else if (stepDef) {
     renderHeader(phase);
-    renderHero(phase);
     if (stepDef.type === 'info') renderInfoStep(pageId, stepDef);
     else renderChoiceStep(pageId, stepDef);
     renderSidebar(pageId, phase);
   } else if (endDef) {
     renderHeader('end');
-    renderHero('end');
     renderEndState(endDef);
     removeSidebar();
   } else {
-    // Unknown id — fall back to start
     window.location.hash = '#s0';
     return;
   }
