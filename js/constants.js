@@ -265,37 +265,37 @@ const ENDS = {
     icon: '📡',
     title: 'Jūsų skundą nagrinėja RRT',
     body: 'Skundus dėl elektroninių ryšio (interneto, televizijos, mobilaus ryšio) ir pašto paslaugų  priima Lietuvos Respublikos ryšių reguliavimo tarnyba (RRT).',
-    link: { href: 'https://rrt.lt/', label: 'Atidaryti RRT svetainę →' },
+    link: { href: 'https://rrt.lt/apie-rrt/kontaktai-ir-struktura', label: 'Atidaryti RRT svetainę →' },
   },
   'end-lb': {
     icon: '🏦',
     title: 'Jūsų skundą nagrinėja Lietuvos bankas',
     body: 'Skundus dėl finansinių paslaugų (bankai, draudimas, kredito unijos, investiciniai fondai ir kt.) priima Lietuvos bankas.',
-    link: { href: 'https://www.lb.lt/', label: 'Atidaryti Lietuvos banko svetainę →' },
+    link: { href: 'https://www.lb.lt/lt/spreskite-ginca-su-finansiniu-paslaugu-teikeju', label: 'Atidaryti Lietuvos banko svetainę →' },
   },
   'end-vert': {
     icon: '⚡',
     title: 'Jūsų skundą nagrinėja VERT',
     body: 'Skundus dėl energetikos įmonių veiklos ir komunalinių paslaugų (dujos, elektra, šiluma, vanduo) priima Valstybinė energetikos reguliavimo taryba.',
-    link: { href: 'https://www.vert.lt/Puslapiai/default.aspx', label: 'Atidaryti VERT svetainę →' },
+    link: { href: 'https://www.vert.lt/Puslapiai/vartotojams/vartotoju-teisiu-apsauga.aspx', label: 'Atidaryti VERT svetainę →' },
   },
   'end-advokatura': {
     icon: '⚖️',
     title: 'Jūsų skundą nagrinėja Lietuvos advokatūra',
     body: 'Skundus dėl teisinių paslaugų (advokatų) priima Lietuvos advokatūros advokatų taryba.',
-    link: { href: 'https://www.advokatura.lt/', label: 'Atidaryti Advokatūros svetainę →' },
+    link: { href: 'https://www.advokatura.lt/duk/', label: 'Atidaryti Advokatūros svetainę →' },
   },
   'end-vmvt': {
     icon: '🥗',
     title: 'Jūsų skundą nagrinėja VMVT',
     body: 'Skundus dėl maisto saugos, kokybės ir veterinarinių pažeidimų priima Valstybinė maisto ir veterinarijos tarnyba.',
-    link: { href: 'https://vmvt.lrv.lt/lt/', label: 'Atidaryti VMVT svetainę →' },
+    link: { href: 'https://vmvt.lrv.lt/lt/visuomenei/praneskite-mums/', label: 'Atidaryti VMVT svetainę →' },
   },
   'end-ecc': {
     icon: '🇪🇺',
     title: 'Kreipkitės į Europos vartotojų centrą',
     body: 'Skundus dėl ES šalių, Norvegijos ir Islandijos įmonių prekių ir paslaugų priima Europos vartotojų centras Lietuvoje (ECC Lietuva).',
-    link: { href: 'https://ecc.lt/', label: 'Atidaryti ECC Lietuva svetainę →' },
+    link: { href: 'https://ecc.lt/pateikti-skunda/', label: 'Atidaryti ECC Lietuva svetainę →' },
   },
   'end-kita': {
     icon: '❓',
@@ -315,7 +315,7 @@ const ENDS = {
   'end-14days': {
     icon: '📬',
     title: 'Pirmiausia kreipkitės į pardavėją raštu',
-    body: 'Prieš teikiant skundą VVTAT, privalote raštu kreiptis į pardavėją, nurodyti savo reikalavimą ir suteikti jam 14 kalendorinių dienų atsakyti.\n\nJeigu per 14 dienų pardavėjas nepateiks atsakymo arba atsakymas jūsų netenkins — tuomet turėsite teisę kreiptis į VVTAT.\n\nPatarimas: siųskite el. paštu arba registruotu laišku ir išsaugokite kopiją.',
+    body: 'Prieš teikiant skundą VVTAT, privalote raštu kreiptis į pardavėją, nurodyti savo reikalavimą ir suteikti jam 14 kalendorinių dienų atsakyti.\n\nJeigu per 14 dienų pardavėjas nepateiks atsakymo arba atsakymas jūsų netenkins — tuomet jūsų situaciją nagrinės VVTAT.\n\nPatarimas: siųskite el. paštu arba registruotu laišku ir išsaugokite kopiją.',
   },
   'end-zodziai': {
     icon: '📩',
