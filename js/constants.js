@@ -146,7 +146,7 @@ const STEPS = {
       { value: 'lt_verslas', next: 's3_price',       marker: 'A', title: 'Lietuvoje registruotas verslas',                          desc: 'Pardavėjas / paslaugos teikėjas yra juridinis asmuo ar fizinis asmuo, vykdantis individualią veiklą, Lietuvoje' },
       { value: 'eu_verslas', next: 'end-ecc',         marker: 'B', title: 'Europos Sąjungoje, Norvegijoje ar Islandijoje registruotas verslas',      desc: 'Pardavėjas registruotas kitoje Europos Sąjungos šalyje ar Europos Ekonomikos zonos valstybėje' },
       { value: 'fiz_pardav', next: 'end-fiz-pardav',  marker: 'C', title: 'Privatus asmuo (neprofesionalus pardavėjas)',              desc: 'Pavyzdžiui, pirkimas per skelbimų portalą iš privataus asmens' },
-      { value : 'kita',       next: 'end-ecc',         marker: 'D', title: 'Kitas atvejis',                                              desc: 'Pardavėjas yra už ES ribų arba nežinau, kas tai yra' },
+      { value : 'kita',       next: 'end-kita',         marker: 'D', title: 'Kitas atvejis',                                              desc: 'Pardavėjas yra už ES ribų arba nežinau, kas tai yra' },
     ],
   },
   s3_price: {
