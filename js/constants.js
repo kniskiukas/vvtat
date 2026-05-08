@@ -80,7 +80,7 @@ const STEP_NAV = [
   { id: 's1',             label: 'Kategorija',           phase: 'eligibility' },
   { id: 's2',             label: 'Paslaugos teikėjas',   phase: 'eligibility' },
   { id: 's3_price',       label: 'Kaina',                phase: 'eligibility' },
-  { id: 's4_subcategory', label: 'prašymo pobūdis',        phase: 'category'    },
+  { id: 's4_subcategory', label: 'Prašymo pobūdis',        phase: 'category'    },
   { id: 's5_14days',      label: '14 dienų kreipimasis', phase: 'category'    },
   { id: 'q2_01_adoc',     label: 'ADoc galimybė',        phase: 'documents'   },
   { id: 'q2_02_response', label: 'Pardavėjo atsakymas',  phase: 'documents'   },
