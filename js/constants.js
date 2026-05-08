@@ -309,6 +309,7 @@ const ENDS = {
     icon: '💶',
     title: 'Jei ginčo suma mažesnė nei 20 EUR',
     body: 'VVTAT turi teisę atsisakyti nagrinėti vartojimo ginčą, jei ginčo suma yra mažesnė negu 20 eurų, išskyrus atvejus, kai ginčas turi reikšmės formuojant naują vartotojų teisių apsaugos praktiką ir (ar) yra kitų svarbių aplinkybių',
+    next: 's4_subcategory',
   },
   'end-14days': {
     icon: '📬',
@@ -334,5 +335,6 @@ const ENDS = {
     icon: '🖊️',
     title: 'Reikės pagalbos arba kito kreipimosi būdo',
     body: 'Jei negalite pateikti ADoc formato prašymo, galite:\n• Paprašyti artimo žmogaus pagalbos pildant prašymą kompiuteryje\n• Atvykti į VVTAT tiesiogiai\n• Atsisiųsti Word šabloną, atspausdinti ir pateikti fiziškai',
+    link: { href: 'Vartotojo-prašymo-forma.docx', label: '⬇ Atsisiųsti Word šabloną' },
   },
 };
