@@ -311,6 +311,7 @@ const ENDS = {
     icon: '💶',
     title: 'Ginčo suma per maža',
     body: 'VVTAT nenagrinėja ginčų, kai ginčo suma mažesnė nei 20 eurų. Galite bandyti spręsti skundą tiesiogiai su pardavėju arba kreiptis į teismą.',
+    next: 's4_subcategory',
   },
   'end-14days': {
     icon: '📬',
@@ -336,5 +337,6 @@ const ENDS = {
     icon: '🖊️',
     title: 'Reikės pagalbos arba kito kreipimosi būdo',
     body: 'Jei negalite pateikti ADoc formato prašymo, galite:\n• Paprašyti artimo žmogaus pagalbos pildant prašymą kompiuteryje\n• Atvykti į VVTAT tiesiogiai\n• Atsisiųsti Word šabloną, atspausdinti ir pateikti fiziškai',
+    link: { href: 'Vartotojo-prašymo-forma.docx', label: '⬇ Atsisiųsti Word šabloną' },
   },
 };
