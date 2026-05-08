@@ -69,7 +69,11 @@ function renderChoiceStep(stepId, step) {
   document.querySelectorAll('.option-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const prev = document.querySelector('.option-btn.selected');
-      if (prev?.dataset?.value !== btn.dataset.value) clearUploadKeys(getPageUploadKeys());
+      const isChanging = prev?.dataset?.value !== btn.dataset.value;
+      if (isChanging) {
+        clearUploadKeys(getPageUploadKeys());
+        clearAnswersFrom(stepId);
+      }
       document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       setAnswer(stepId, btn.dataset.value);
@@ -103,6 +107,7 @@ function renderEndState(end) {
       <div class="end-title">${escHtml(end.title)}</div>
       <div class="end-body">${escHtml(end.body)}</div>
       <div class="end-actions">
+        ${end.next ? `<a href="#${end.next}" class="btn-next">Tęsti vis tiek →</a>` : ''}
         ${end.link ? `<a href="${end.link.href}" target="_blank" rel="noopener" class="btn-external">${escHtml(end.link.label)}</a>` : ''}
         <button class="btn-ghost" onclick="goBack()">← Atgal</button>
         <button class="btn-ghost" onclick="confirmRestart()">↩ Pradėti iš naujo</button>

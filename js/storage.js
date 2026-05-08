@@ -18,6 +18,23 @@ function getAllAnswers() {
   catch { return {}; }
 }
 
+function clearAnswersFrom(stepId) {
+  const idx = STEP_NAV.findIndex(s => s.id === stepId);
+  if (idx < 0) return;
+  const laterSteps = STEP_NAV.slice(idx + 1);
+  try {
+    const all = JSON.parse(localStorage.getItem(KEY_ANSWERS) || '{}');
+    let changed = false;
+    for (const step of laterSteps) {
+      if (step.id in all) { delete all[step.id]; changed = true; }
+    }
+    if (changed) localStorage.setItem(KEY_ANSWERS, JSON.stringify(all));
+  } catch {}
+  const fileKeys = laterSteps.flatMap(s => STEP_UPLOAD_KEYS[s.id] || []);
+  if (fileKeys.length) clearUploadKeys(fileKeys);
+  try { sessionStorage.setItem(KEY_MAX_STEP, String(idx)); } catch {}
+}
+
 function getMaxVisitedIndex() {
   return parseInt(sessionStorage.getItem(KEY_MAX_STEP) || '-1', 10);
 }
