@@ -1,7 +1,10 @@
 'use strict';
 
+function idToSlug(id) { return ID_TO_SLUG[id] || id; }
+function slugToId(slug) { return SLUG_TO_ID[slug] || slug; }
+
 function navigate(stepId) {
-  window.location.hash = '#' + stepId;
+  window.location.hash = '#' + idToSlug(stepId);
 }
 
 function goBack() {
@@ -10,8 +13,7 @@ function goBack() {
 
 function restart() {
   clearAll();
-  window.location.hash = '#s0';
-  // Force re-render since hash may not change if already on s0
+  navigate('s0');
   renderPage('s0');
 }
 

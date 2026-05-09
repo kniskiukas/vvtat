@@ -35,18 +35,14 @@ function renderHeader(activePhase) {
     const cls = [isDone ? 'done' : '', isActive ? 'active' : '', isOpen ? 'open' : 'locked'].filter(Boolean).join(' ');
     const dot = isDone ? '✓' : p.num;
     const arrow = i < PHASES.length - 1 ? '<span class="phase-arrow">›</span>' : '';
-    return isOpen
-      ? `<a class="phase-step ${cls}" href="#${PHASE_FIRST_STEP[p.id]}">
-           <span class="phase-step-inner"><span class="phase-dot">${dot}</span><span>${p.label}</span></span>${arrow}
-         </a>`
-      : `<span class="phase-step ${cls}" aria-disabled="true">
+    return `<span class="phase-step ${cls}">
            <span class="phase-step-inner"><span class="phase-dot">${dot}</span><span>${p.label}</span></span>${arrow}
          </span>`;
   }).join('');
 
   header.innerHTML = `
     <div class="header-inner">
-      <a href="#s0" class="header-brand">
+      <a href="#${idToSlug('s0')}" class="header-brand">
         <div class="brand-logo">VVTAT</div>
         <div class="brand-text">
           <span class="brand-name">Vartotojų teisių apsauga</span>
@@ -85,7 +81,7 @@ function renderSidebar(activeStepId, activePhase) {
     const cls = ['bnav-pill', isActive ? 'active' : isDone ? 'done' : '', isOpen && !isActive ? 'open' : !isOpen ? 'locked' : ''].filter(Boolean).join(' ');
 
     items.push(isOpen && !isActive
-      ? `<a class="${cls}" href="#${step.id}">${escHtml(step.label)}</a>`
+      ? `<a class="${cls}" href="#${idToSlug(step.id)}">${escHtml(step.label)}</a>`
       : `<span class="${cls}">${escHtml(step.label)}</span>`);
   });
 

@@ -1,0 +1,142 @@
+'use strict';
+
+const STEPS = {
+  s0: {
+    phase: 'eligibility',
+    label: 'Žingsnis 1 / 4',
+    question: 'Ar Jūs esate fizinis asmuo?',
+    sub: 'VVTAT nagrinėja tik ginčus, kilusius tarp fizinių asmenų (vartotojų) ir verslo subjektų',
+    options: [
+      { value: 'fizinis', next: 's1', marker: 'A', title: 'Taip, esu fizinis asmuo', desc: 'Prekes ar paslaugas įsigijau asmeniniais, su verslu nesusijusiais, tikslais' },
+    ],
+    info: { type: 'red', icon: '🚫', text: '<strong>Juridiniams asmenims negalime padėti.</strong> VVTAT nagrinėja tik ginčus tarp fizinių asmenų (vartotojų) ir verslo subjektų. Jei atstovaujate įmonei ar organizacijai — kreipkitės į bendrosios kompetencijos teismą arba spręskite ginčą derybų keliu.' },
+  },
+  s1: {
+    phase: 'eligibility',
+    label: 'Žingsnis 2 / 4',
+    question: 'Jūs kreipiatės dėl?',
+    sub: 'Pasirinkite kategoriją, kuri geriausiai atspindi jūsų situaciją.',
+    options: [
+      { value: 'rysiai',     next: 'end-rrt',       marker: 'A', title: 'Elektroninių ryšių arba pašto paslaugų',             desc: 'Internetas, televizija, mobilusis ryšys, paštas',      hint: 'Nukreipiama į RRT' },
+      { value: 'finansai',   next: 'end-lb',         marker: 'B', title: 'Finansinių paslaugų',                                desc: 'Bankai, draudimas, kredito unijos, investicinės įmonės ir kt.', hint: 'Nukreipiama į Lietuvos banką' },
+      { value: 'maistas',    next: 'end-vmvt',       marker: 'C', title: 'Maisto produktų ar veterinarinių paslaugų',          desc: 'Maisto sauga, kokybė, veterinariniai pažeidimai',     hint: 'Nukreipiama į VMVT' },
+      { value: 'energetika', next: 'end-vert',       marker: 'D', title: 'Energetikos įmonių veiklos ar komunalinių paslaugų', desc: 'Dujos, elektra, šiluma, vanduo',                      hint: 'Nukreipiama į VERT' },
+      { value: 'teisines',   next: 'end-advokatura', marker: 'E', title: 'Teisinių paslaugų (advokatų)',                       desc: 'prašymai dėl advokato suteiktų paslaugų',             hint: 'Nukreipiama į Advokatūrą' },
+      { value: 'vartojimas', next: 's2',             marker: 'F', title: 'Vartojimo prekių ar kitų paslaugų',                  desc: 'Ne maisto prekių (avalynės, drabužių, elektrotechnikos prietaisų, baldų ir kt.), laisvalaikio ir turizmo, statybų rangos, remonto, grožio ir kt. paslaugų' },
+    ],
+  },
+  s2: {
+    phase: 'eligibility',
+    label: 'Žingsnis 3 / 4',
+    question: 'Identifikuokite paslaugos teikėją / prekės pardavėją',
+    sub: 'Kur yra registruotas pardavėjas arba paslaugos teikėjas, dėl kurio teikiate prašymą?',
+    options: [
+      { value: 'lt_verslas', next: 's3_price',      marker: 'A', title: 'Lietuvoje registruotas verslas',                                     desc: 'Pardavėjas / paslaugos teikėjas yra juridinis asmuo ar fizinis asmuo, vykdantis individualią veiklą, Lietuvoje' },
+      { value: 'eu_verslas', next: 'end-ecc',        marker: 'B', title: 'Europos Sąjungoje, Norvegijoje ar Islandijoje registruotas verslas', desc: 'Pardavėjas registruotas kitoje Europos Sąjungos šalyje ar Europos Ekonomikos zonos valstybėje', hint: 'Nukreipiama į ECC Lietuva' },
+      { value: 'fiz_pardav', next: 'end-fiz-pardav', marker: 'C', title: 'Privatus asmuo (neprofesionalus pardavėjas)',                        desc: 'Pavyzdžiui, pirkimas per skelbimų portalą iš privataus asmens',                                  hint: 'VVTAT nenagrinėja — kreipkitės į teismą' },
+      { value: 'kita',       next: 'end-kita',       marker: 'D', title: 'Kitas atvejis',                                                      desc: 'Pardavėjas yra už ES ribų arba nežinau, kas tai yra',                                            hint: 'Kreipkitės į instituciją pardavėjo šalyje' },
+    ],
+  },
+  s3_price: {
+    phase: 'eligibility',
+    label: 'Žingsnis 4 / 4',
+    question: 'Ar jūsų įsigytos prekės ar paslaugos kaina viršija 20 eurų?',
+    options: [
+      { value: 'kaina_taip', next: 's4_subcategory', marker: 'A', title: 'Taip, kaina viršija 20 eurų' },
+      { value: 'kaina_ne',   next: 'end-kaina',      marker: 'B', title: 'Ne, kaina neviršija 20 eurų',                                    hint: 'VVTAT gali atsisakyti nagrinėti šį ginčą' },
+    ],
+  },
+  s4_subcategory: {
+    phase: 'category',
+    label: 'Kategorija 1 / 2',
+    question: 'Kokio pobūdžio yra jūsų prašymas?',
+    sub: 'Pasirinkite, kuri sritis geriausiai apibūdina problemą.',
+    options: [
+      { value: 'preke',        next: 's5_14days', marker: 'A', title: 'Prekė nekokybiška, sugedo arba nepristatyta' },
+      { value: 'laisvalaikis', next: 's5_14days', marker: 'B', title: 'Laisvalaikio, turizmo arba transporto paslaugos' },
+      { value: 'valymas',      next: 's5_14days', marker: 'C', title: 'Cheminio valymo ar valymo paslaugos' },
+      { value: 'statyba',      next: 's5_14days', marker: 'D', title: 'Statybos paslaugos' },
+      { value: 'grozis',       next: 's5_14days', marker: 'E', title: 'Grožio ar sveikatos priežiūros paslaugos' },
+      { value: 'kita',         next: 's5_14days', marker: 'H', title: 'Kita vartojimo paslauga ar prekė' },
+    ],
+  },
+  s5_14days: {
+    phase: 'category',
+    label: 'Kategorija 2 / 2',
+    question: 'Ar jau kreipėtės į pardavėją raštu ir praėjo 14 dienų?',
+    options: [
+      { value: '14d_taip', next: 'q2_01_adoc', marker: 'A', title: 'Taip — kreipiausi raštu ir praėjo 14 dienų arba pardavėjas neatsakė' },
+      { value: '14d_ne',   next: 'end-14days', marker: 'B', title: 'Ne — dar nesikreipiau arba terminas dar nesibaigė',       hint: 'Išsiųskite pretenziją raštu ir palaukite 14 dienų' },
+    ],
+  },
+  q2_01_adoc: {
+    phase: 'documents',
+    label: 'Dokumentai 1 / 5',
+    question: 'Ar galėsite pateikti prašymą ADoc formatu?',
+    sub: 'Prašymai VVTAT teikiami elektroniniu parašu pasirašytu dokumentu (ADoc).',
+    info: { type: 'blue', icon: '📄', text: 'ADoc — elektroniniu parašu pasirašyto dokumento formatas. Pasirašoma per Mobile ID, Smart-ID arba USB raktą.' },
+    options: [
+      { value: 'adoc_taip',    next: 'q2_02_response', marker: 'A', title: 'Taip — turiu el. parašą ir galiu pasirašyti' },
+      { value: 'adoc_mob',     next: 'q2_02_response', marker: 'B', title: 'Galiu, bet ADoc neatidarau telefone', desc: 'Rekomenduojame pildyti kompiuteryje' },
+      { value: 'adoc_nezinau', next: 'q2_01_explain',  marker: 'C', title: 'Nežinau, kas yra ADoc',               desc: 'Paaiškiname ir tęsiame' },
+      { value: 'adoc_ne',      next: 'end-adoc-ne',    marker: 'D', title: 'Ne — neturiu el. parašo arba nemoku',                   hint: 'Reikia el. parašo — Mobile ID, Smart-ID ar USB raktas' },
+    ],
+  },
+  q2_01_explain: {
+    phase: 'documents',
+    type: 'info',
+    label: 'Dokumentai 1 / 5',
+    question: 'Kas yra ADoc?',
+    info: { type: 'blue', icon: '📄', text: 'ADoc — tai elektroniniu parašu pasirašyto dokumento formatas. Dažniausiai jis sukuriamas automatiškai, kai pasirašote prašymą el. parašu (pvz., per Mobile ID, Smart-ID ar USB el. parašo raktą). Patarimas: Jei neatidarote telefone — atidarykite kompiuteriu.' },
+    next: 'q2_02_response',
+    nextLabel: 'Supratau, tęsti →',
+  },
+  q2_02_response: {
+    phase: 'documents',
+    label: 'Dokumentai 2 / 5',
+    question: 'Ar turite pardavėjo atsakymą į jūsų pretenziją?',
+    sub: 'Pardavėjo atsakymas arba jūsų kreipimosi kopija yra svarbus įrodymas.',
+    options: [
+      { value: 'resp_rastas',      next: 'q2_03_purchase', marker: 'A', title: 'Taip — turiu atsakymą raštu',                     desc: 'El. laiškas, oficialus raštas, savitarnos žinutė ar pan.',               uploadKey: 'atsakymas',   uploadLabel: 'Pridėti atsakymo kopiją',       uploadSub: 'PDF, nuotrauka arba screenshot (el. laiško, savitarnos žinutės, oficialaus rašto)' },
+      { value: 'resp_kreipimasis', next: 'q2_03_purchase', marker: 'B', title: 'Ne — neatsakė, bet turiu savo kreipimosi kopiją', desc: 'Išsiųsto el. laiško screenshot, registruoto laiško kvitas, savitarnos pranešimas', uploadKey: 'kreipimasis', uploadLabel: 'Pridėti savo kreipimosi kopiją', uploadSub: 'El. laiško screenshot, registruoto laiško kvitas, savitarnos pranešimas' },
+      { value: 'resp_zodziai',     next: 'end-zodziai',     marker: 'C', title: 'Kreipiausi tik žodžiu arba telefonu',                  hint: 'Išsiųskite pretenziją raštu ir išsaugokite kopiją' },
+      { value: 'resp_niekas',      next: 'end-no-evidence', marker: 'D', title: 'Neturiu nei atsakymo, nei kreipimosi kopijos',           hint: 'Raskite el. laišką, SMS ar savitarnos pranešimą' },
+    ],
+  },
+  q2_03_purchase: {
+    phase: 'documents',
+    label: 'Dokumentai 3 / 5',
+    question: 'Kokį pirkimo dokumentą turite?',
+    sub: 'Pirkimo įrodymas yra būtinas prašymui.',
+    options: [
+      { value: 'purch_sutartis', next: 'q2_04_problem',  marker: 'A', title: 'Sutartis arba užsakymo / pirkimo patvirtinimas', desc: 'PVM sąskaita faktūra, sąskaita, mokėjimo kortelės čekis ir pan.', uploadKey: 'pirkimas', uploadLabel: 'Pridėti sutartį arba pirkimo patvirtinimą', uploadSub: 'PVM sąskaita faktūra, sąskaita, mokėjimo kortelės čekis, sutartis ir pan. (PDF arba nuotrauka)' },
+      { value: 'purch_kvitas',   next: 'q2_04_problem',  marker: 'B', title: 'Sąskaita faktūra arba kvitas',                                                                                                   uploadKey: 'pirkimas', uploadLabel: 'Pridėti sąskaitos arba kvito kopiją',           uploadSub: 'PDF arba nuotrauka' },
+      { value: 'purch_bankas',   next: 'q2_04_problem',  marker: 'C', title: 'Tik banko mokėjimo įrodymas',                    desc: 'Banko sąskaitos išrašas arba pavedimo kvitas',                   uploadKey: 'pirkimas', uploadLabel: 'Pridėti banko išrašą arba pavedimo kvitą',   uploadSub: 'PDF arba screenshot iš banko programėlės' },
+      { value: 'purch_nieko',    next: 'end-no-purchase', marker: 'D', title: 'Nieko neturiu',                                             hint: 'Paprašykite sąskaitos ar banko išrašo iš pardavėjo' },
+    ],
+  },
+  q2_04_problem: {
+    phase: 'documents',
+    label: 'Dokumentai 4 / 5',
+    question: 'Kokie buvo pastebėti trūkumai ar problemos?',
+    sub: 'Pasirinkite situaciją — ji lems, kokius įrodymus rekomenduosime pridėti.',
+    options: [
+      { value: 'prob_nekokybiska', next: 'q2_06_damages', marker: 'A', title: 'Prekė nekokybiška arba sugedo',                       desc: 'Rekomenduojama: nuotrauka / video, serviso išvada, garantinis aktas',      uploadKey: 'problema', uploadLabel: 'Pridėti trūkumo įrodymus',           uploadSub: 'Nuotrauka, video, serviso išvada, garantinis aktas' },
+      { value: 'prob_paslauga',    next: 'q2_06_damages', marker: 'B', title: 'Paslauga atlikta nekokybiškai',                       desc: 'Rekomenduojama: sutartis, darbų aktai, susirašinėjimas, nuotraukos',       uploadKey: 'problema', uploadLabel: 'Pridėti paslaugos kokybės įrodymus', uploadSub: 'Sutartis, darbų aktai, nuotraukos prieš / po, susirašinėjimas' },
+      { value: 'prob_pristatymas', next: 'q2_06_damages', marker: 'C', title: 'Nepristatė arba vėluoja pristatymas',                desc: 'Rekomenduojama: užsakymo patvirtinimas, siuntos sekimas, susirašinėjimas', uploadKey: 'problema', uploadLabel: 'Pridėti pristatymo įrodymus',        uploadSub: 'Užsakymo patvirtinimas, siuntos sekimo screenshot, susirašinėjimas' },
+      { value: 'prob_pinigai',     next: 'q2_06_damages', marker: 'D', title: 'Negrąžina pinigų arba atsisako tenkinti pretenziją', desc: 'Rekomenduojama: pretenzija + atsakymas, mokėjimo įrodymas',               uploadKey: 'problema', uploadLabel: 'Pridėti įrodymus',                  uploadSub: 'Pretenzija, atsakymas, mokėjimo patvirtinimas, susirašinėjimas' },
+      { value: 'prob_kita',        next: 'q2_06_damages', marker: 'E', title: 'Kita',                                               desc: 'Pridėkite įrodymus, aiškiai parodančius aplinkybes',                      uploadKey: 'problema', uploadLabel: 'Pridėti turimus įrodymus',           uploadSub: 'Nuotraukos, susirašinėjimas, dokumentai' },
+    ],
+  },
+  q2_06_damages: {
+    phase: 'documents',
+    label: 'Dokumentai 5 / 5',
+    question: 'Ar patyrėte papildomų nuostolių (žalą)?',
+    sub: 'Pvz. mokėjote už remontą, ekspertizę, papildomą siuntimą ar panašiai.',
+    options: [
+      { value: 'dmg_taip',    next: 'summary', marker: 'A', title: 'Taip — patyriau papildomų nuostolių',           desc: 'Pridėkite žalos įrodymus: sąskaitas, kvitus, pavedimų patvirtinimus', uploadKey: 'zala', uploadLabel: 'Pridėti žalos įrodymus', uploadSub: 'Sąskaitos, kvitai, ekspertizės aktas, pavedimų patvirtinimai' },
+      { value: 'dmg_ne',      next: 'summary', marker: 'B', title: 'Ne — papildomų nuostolių nepatyriau' },
+      { value: 'dmg_nezinau', next: 'summary', marker: 'C', title: 'Nežinau — žalą galėsiu patikslinti vėliau', desc: 'Tęskite be šio dokumento, vėliau galėsite pridėti' },
+    ],
+  },
+};
