@@ -108,6 +108,7 @@ function renderEndState(end) {
       <div class="end-actions">
         ${end.next ? `<a href="#${idToSlug(end.next)}" class="btn-next">Tęsti vis tiek →</a>` : ''}
         ${end.link ? `<a href="${end.link.href}" target="_blank" rel="noopener" class="btn-external">${escHtml(end.link.label)}</a>` : ''}
+        <a class="btn-ghost" href="https://vvtat.lrv.lt/lt/DUK/">DUK</a>
         <button class="btn-ghost" onclick="goBack()">← Atgal</button>
         <button class="btn-ghost" onclick="confirmRestart()">↩ Pradėti iš naujo</button>
       </div>

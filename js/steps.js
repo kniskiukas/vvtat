@@ -33,7 +33,7 @@ const STEPS = {
     options: [
       { value: 'lt_verslas', next: 's3_price',      marker: 'A', title: 'Lietuvoje registruotas verslas',                                     desc: 'Pardavėjas / paslaugos teikėjas yra juridinis asmuo ar fizinis asmuo, vykdantis individualią veiklą, Lietuvoje' },
       { value: 'eu_verslas', next: 'end-ecc',        marker: 'B', title: 'Europos Sąjungoje, Norvegijoje ar Islandijoje registruotas verslas', desc: 'Pardavėjas registruotas kitoje Europos Sąjungos šalyje ar Europos Ekonomikos zonos valstybėje', hint: 'Nukreipiama į ECC Lietuva' },
-      { value: 'fiz_pardav', next: 'end-fiz-pardav', marker: 'C', title: 'Privatus asmuo (neprofesionalus pardavėjas)',                        desc: 'Pavyzdžiui, pirkimas per skelbimų portalą iš privataus asmens',                                  hint: 'VVTAT nenagrinėja — kreipkitės į teismą' },
+      { value: 'fiz_pardav', next: 'end-fiz-pardav', marker: 'C', title: 'Privatus asmuo (neprofesionalus pardavėjas)',                        desc: 'Pavyzdžiui, pirkimas per skelbimų portalą iš privataus asmens',                                  hint: 'VVTAT nenagrinėja — kreipkitės į teismą arba bandykite išspręsti derybų būdu.' },
       { value: 'kita',       next: 'end-kita',       marker: 'D', title: 'Kitas atvejis',                                                      desc: 'Pardavėjas yra už ES ribų arba nežinau, kas tai yra',                                            hint: 'Kreipkitės į instituciją pardavėjo šalyje' },
     ],
   },
@@ -63,10 +63,11 @@ const STEPS = {
   s5_14days: {
     phase: 'category',
     label: 'Kategorija 2 / 2',
-    question: 'Ar jau kreipėtės į pardavėją raštu ir praėjo 14 dienų?',
+    question: 'Ar jau kreipėtės į pardavėją / paslaugų teikėją raštu ir praėjo 14 dienų?',
     options: [
-      { value: '14d_taip', next: 'q2_01_adoc', marker: 'A', title: 'Taip — kreipiausi raštu ir praėjo 14 dienų arba pardavėjas neatsakė' },
-      { value: '14d_ne',   next: 'end-14days', marker: 'B', title: 'Ne — dar nesikreipiau arba terminas dar nesibaigė',       hint: 'Išsiųskite pretenziją raštu ir palaukite 14 dienų' },
+      { value: '14d_taip', next: 'q2_01_adoc', marker: 'A', title: 'Taip — kreipiausi raštu ir gavau atsakymą' },
+      { value: '14d_be_atsakymo', next: 'q2_01_adoc', marker: 'B', title: 'Taip — kreipiausi raštu, bet pardavėjas / paslaugų teikėjas neatsakė' },
+      { value: '14d_ne',   next: 'end-14days', marker: 'C', title: 'Ne — dar nesikreipiau arba terminas dar nesibaigė',       hint: 'Išsiųskite pretenziją raštu ir palaukite 14 dienų' },
     ],
   },
   q2_01_adoc: {
